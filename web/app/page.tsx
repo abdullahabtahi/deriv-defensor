@@ -7,6 +7,7 @@ import Link from "next/link"
 
 
 import { api } from "@/services/api"
+import { IntelligenceBriefingModal } from "@/components/dashboard/IntelligenceBriefingModal"
 
 export default async function Home() {
     const stats = await api.getStats()
@@ -65,8 +66,10 @@ export default async function Home() {
                         Segmented by churn probability &gt; 50%
                     </div>
                 </div>
-
             </div>
+
+            <IntelligenceBriefingModal />
         </div>
     )
 }
+

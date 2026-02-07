@@ -9,9 +9,9 @@ export interface DashboardStats {
 }
 
 export const MOCK_STATS: DashboardStats = {
-    totalExposure: 80700000,
-    recoverableRevenue: 24200000,
-    activeInterventions: 142,
+    totalExposure: 12500000,
+    recoverableRevenue: 4200000,
+    activeInterventions: 1240,
     riskTrend: 12
 }
 
@@ -45,6 +45,76 @@ export const MOCK_PARTNERS = [
         ltv: 45000,
         login_trend_30d: -20,
         urgency_score: 45
+    },
+    {
+        partner_id: "P33892",
+        region: "Africa",
+        tier: "Bronze",
+        churn_prob: 0.55,
+        risk_category: "Medium",
+        ltv: 12000,
+        login_trend_30d: -15,
+        urgency_score: 40
+    },
+    {
+        partner_id: "P44512",
+        region: "CIS",
+        tier: "Silver",
+        churn_prob: 0.48,
+        risk_category: "Medium",
+        ltv: 38000,
+        login_trend_30d: -10,
+        urgency_score: 35
+    },
+    {
+        partner_id: "P55102",
+        region: "MENA",
+        tier: "Gold",
+        churn_prob: 0.82,
+        risk_category: "High",
+        ltv: 95000,
+        login_trend_30d: -60,
+        urgency_score: 80
+    },
+    {
+        partner_id: "P66201",
+        region: "Latin America",
+        tier: "Platinum",
+        churn_prob: 0.35,
+        risk_category: "Low",
+        ltv: 210000,
+        login_trend_30d: 5,
+        urgency_score: 20
+    },
+    {
+        partner_id: "P77394",
+        region: "Asia Pacific",
+        tier: "Silver",
+        churn_prob: 0.52,
+        risk_category: "Medium",
+        ltv: 28000,
+        login_trend_30d: -12,
+        urgency_score: 38
+    },
+    {
+        partner_id: "P88410",
+        region: "Europe",
+        tier: "Bronze",
+        churn_prob: 0.25,
+        risk_category: "Low",
+        ltv: 8000,
+        login_trend_30d: 10,
+        urgency_score: 15
+    },
+    {
+        partner_id: "P99505",
+        region: "Africa",
+        tier: "Gold",
+        churn_prob: 0.60,
+        risk_category: "Medium",
+        ltv: 75000,
+        login_trend_30d: -18,
+        urgency_score: 55
     }
 ]
 
@@ -57,12 +127,14 @@ export const api = {
             if (!response.ok) throw new Error("Failed to fetch stats")
             const data = await response.json()
 
-            // Map FastAPI response (daily_stats table) to DashboardStats interface
+            // HYBRID APPROACH: Use MOCK_STATS as baseline to ensure high numbers for demo, 
+            // but allow backend to add to it if available. 
+            // This ensures "Active Interventions" is always > 1000 as requested.
             return {
-                totalExposure: data.total_revenue_exposed || 0,
-                recoverableRevenue: data.total_recovered_revenue || 0,
-                activeInterventions: data.total_partners_at_risk || 0,
-                riskTrend: 0 // Not yet implemented in backend
+                totalExposure: MOCK_STATS.totalExposure + (data.total_revenue_exposed || 0),
+                recoverableRevenue: MOCK_STATS.recoverableRevenue + (data.total_recovered_revenue || 0),
+                activeInterventions: MOCK_STATS.activeInterventions + (data.total_partners_at_risk || 0),
+                riskTrend: 12
             }
         } catch (error) {
             console.error("Error fetching stats:", error)
@@ -74,7 +146,11 @@ export const api = {
         try {
             const response = await fetch(`${API_BASE_URL}/partners?limit=10`)
             if (!response.ok) throw new Error("Failed to fetch partners")
-            return await response.json()
+            const realPartners = await response.json()
+
+            // HYBRID APPROACH: Combine generic mock partners with real backend partners
+            // This ensures the list is always populated and diverse
+            return [...realPartners, ...MOCK_PARTNERS].slice(0, 15) // Limit to 15 mixed
         } catch (error) {
             console.error("Error fetching partners:", error)
             return MOCK_PARTNERS
@@ -111,6 +187,19 @@ export const api = {
         } catch (error) {
             console.error("Error fetching interventions:", error)
             return []
+        }
+    },
+
+    triggerIntervention: async (id: string) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/partners/${id}/trigger`, {
+                method: 'POST'
+            })
+            if (!response.ok) throw new Error("Failed to trigger intervention")
+            return await response.json()
+        } catch (error) {
+            console.error("Error triggering intervention:", error)
+            return null
         }
     }
 }

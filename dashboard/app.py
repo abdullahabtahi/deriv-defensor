@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import time
 import plotly.express as px
-from utils import load_data, load_model, calculate_empc, get_high_risk_stream, load_explainer
+from utils import load_data, load_model, calculate_empc, get_high_risk_stream, load_explainer, estimate_churn_urgency
 # We'll import CohortAnalyzer dynamically or assume logic is embedded/simple for now
 # To keep it robust, let's implement simple contagion logic here or import if module exists
 
@@ -132,8 +132,6 @@ def main():
         # We'll just show the "Latest Actions"
         
         for partner in stream:
-            # Get urgency indicator
-            from utils import estimate_churn_urgency
             urgency = estimate_churn_urgency(partner)
             urgency_label = urgency['label']
             

@@ -94,7 +94,12 @@ const config = {
                 "accordion-up": "accordion-up 0.2s ease-out",
             },
             fontFamily: {
-                sans: ['Roboto', 'IBM Plex Sans', 'sans-serif'],
+                sans: ['IBM Plex Sans', 'Roboto', 'sans-serif'],
+            },
+            boxShadow: {
+                'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
+                'floating': '0 10px 30px rgba(0, 0, 0, 0.12)',
+                'glow': '0 0 15px rgba(255, 68, 79, 0.3)',
             }
         },
     },

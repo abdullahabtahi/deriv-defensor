@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Deriv Defensor",
+    title: "Defensor",
     description: "AI-Powered Churn Prediction Dashboard",
 };
+
 
 export default function RootLayout({
     children,

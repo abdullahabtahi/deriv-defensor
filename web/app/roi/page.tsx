@@ -21,7 +21,9 @@ export default function ROIPage() {
     useEffect(() => {
         async function fetchStats() {
             try {
-                const response = await fetch('http://localhost:8001/interventions')
+                const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001"
+                const response = await fetch(`${baseUrl}/interventions`)
+                if (!response.ok) throw new Error("Failed to fetch interventions")
                 const interventions = await response.json()
 
                 // Calculate stats from interventions

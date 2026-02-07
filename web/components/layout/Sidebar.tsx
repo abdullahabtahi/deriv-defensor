@@ -49,7 +49,7 @@ export default function Sidebar() {
 
             {/* Footer Info */}
             <div className="absolute bottom-6 left-0 right-0 px-6 text-xs text-gray-400 text-center">
-                Deriv Defensor v2.0 <br />
+                Defensor v2.0 <br />
                 Powered by GenAI
             </div>
         </aside>

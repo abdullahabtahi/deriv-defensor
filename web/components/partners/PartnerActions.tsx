@@ -1,8 +1,10 @@
 "use client"
 
+import { useState } from "react"
+import { api } from "@/services/api"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Send } from "lucide-react"
-import { useState } from "react"
 
 interface PartnerActionsProps {
     partnerId: string
@@ -10,14 +12,20 @@ interface PartnerActionsProps {
 
 export function PartnerActions({ partnerId }: PartnerActionsProps) {
     const [isTriggering, setIsTriggering] = useState(false)
+    const router = useRouter()
 
     const handleTrigger = async () => {
         setIsTriggering(true)
-        // Simulate API call to trigger intervention
-        setTimeout(() => {
+        try {
+            const result = await api.triggerIntervention(partnerId)
+            if (result && result.status === 'success') {
+                router.refresh()
+            }
+        } catch (error) {
+            console.error("Failed to trigger intervention:", error)
+        } finally {
             setIsTriggering(false)
-            alert(`Intervention triggered for ${partnerId}! Check the Intervention Log for updates.`)
-        }, 1500)
+        }
     }
 
     const handleCRM = () => {

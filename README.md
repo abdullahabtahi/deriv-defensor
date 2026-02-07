@@ -1,70 +1,103 @@
 # Deriv Defensor
-
 > **The Agentic Decisioning Platform for Partner Retention.**
 
-Deriv Defensor is an AI-powered surveillance and intervention system designed to predict and prevent affiliate partner churn within the Deriv ecosystem. By combining high-fidelity Machine Learning (LightGBM/SHAP) with Generative AI (LLMs), Defensor doesn't just predict risk—it explains it and automates the solution.
+![Dashboard Overview](docs/images/dashboard-hero.png)
 
-![Dashboard Overview](file:///Users/abdullahabtahi/.gemini/antigravity/brain/e13351a3-344f-480b-9d47-7102866b06d8/dashboard_fixed_1770473369162.png)
+## 🚨 The $10M Problem
+Affiliate partner churn is a silent revenue killer. By the time a high-value partner stops referring, it's too late. Traditional dashboards show you *what* happened. **Defensor shows you what *will* happen—and fixes it.**
 
-## 🛡️ Key Features
+### 💼 Business Impact (Simulated)
+Based on our validation with generated transactional data:
+- **$1.2M+** Potential Annual Revenue Saved
+- **74%** Intervention Success Rate
+- **88%** High-Risk Detection Precision
 
-- **Predictive Surveillance:** Real-time risk scoring using LightGBM and SHAP explainability.
-- **GenAI Interventions:** Automated narrative analysis and email drafting for partner outreach.
-- **Outcome Tracking:** Closed-loop monitoring of intervention ROI and protected Lifetime Value (LTV).
-- **Agentic Automation:** One-click batch interventions triggered by intelligent risk thresholds.
+---
 
-## 🏗️ Modern Full-Stack Architecture
+## 🛡️ The Solution: Agentic Defense
 
-Deriv Defensor is built for scalability and performance:
+Defensor is not just a dashboard—it's an autonomous intervention system.
 
-- **Frontend:** Next.js 14 (App Router) with Tailwind CSS & Shadcn/UI.
-- **Backend (Brain):** FastAPI (Python) hosting the ML models and Agent logic.
-- **Data Layer:** Supabase (PostgreSQL) with Row-Level Security (RLS).
-- **Explainability:** SHAP (SHapley Additive exPlanations) for model transparency.
+### 1. **Predictive Surveillance (The "Eyes")**
+Real-time ingestion of partner behavior signals (commission drops, login gaps, sub-affiliate inactivity).
+- **Tech:** LightGBM + SHAP (Explainable AI)
+- **Output:** Dynamic Risk Scores (0-100)
+
+### 2. **GenAI Intelligence (The "Brain")**
+It doesn't just flag risk; it explains *why*. The system automatically drafts personalized retention strategies.
+- **Tech:** LLM Integration
+- **Output:** Natural Language Briefings & Email Drafts
+
+### 3. **Autonomous Intervention (The "Hands")**
+One-click or fully automated outreach execution.
+- **Tech:** Agentic Workflow
+- **Output:** Instant Email Execution & CRM Logging
+
+---
+
+## 🏗️ Technical Architecture
+
+Built for scale, speed, and reliability.
 
 ```mermaid
 graph TD
-    UI[Next.js Frontend] -- REST --> API[FastAPI Logic Layer]
-    API -- Agents/ML --> AI[Python Brain]
-    API -- Postgres --> DB[(Supabase Database)]
+    Client[Next.js 14 Client] --> API[FastAPI Gateway]
+    API --> Agent[Agentic Brain]
+    Agent --> ML[LightGBM Model]
+    Agent --> DB[(Supabase PostgreSQL)]
+    
+    subgraph "Intelligence Layer"
+    ML -- "Risk Scores" --> Agent
+    end
 ```
+
+| Component | Tech Stack |
+|-----------|------------|
+| **Frontend** | Next.js 14 (App Router), Tailwind CSS, Shadcn/UI |
+| **Backend** | FastAPI (Python), Pydantic |
+| **Database** | Supabase (PostgreSQL + RLS) |
+| **AI/ML** | LightGBM, SHAP, LLMs |
+
+---
 
 ## 🚀 Quick Start
 
-### 1. Requirements
+### Prerequisites
 - Node.js 18+
 - Python 3.10+
 - Supabase Account
 
-### 2. Setup
-```bash
-# Install Backend Dependencies
-pip install -r requirements.txt
+### Installation
 
-# Install Frontend Dependencies
-cd web && npm install
-```
+1. **Clone & Install**
+   ```bash
+   git clone https://github.com/yourusername/deriv-defensor.git
+   cd deriv-defensor
+   
+   # Backend
+   pip install -r requirements.txt
+   
+   # Frontend
+   cd web && npm install
+   ```
 
-### 3. Environment Variables
-Create a `.env` in the root and `/web` directories:
-- `SUPABASE_URL`
-- `SUPABASE_KEY`
-- `NEXT_PUBLIC_API_URL` (Points to http://localhost:8001)
+2. **Environment Setup**
+   Create `.env` files in root and `/web` (see `.env.example`).
 
-### 4. Run Development
-```bash
-# Start Backend
-./backend/run.sh
-
-# Start Frontend
-cd web && npm run dev
-```
-
-## 📈 Business Impact (Simulation)
-Based on current synthetic validation:
-- **LTV Protected:** $1.2M+
-- **Intervention Success Rate:** ~74%
-- **High-Risk Detection Precision:** 88%
+3. **Run Development**
+   ```bash
+   # Terminal 1: Backend
+   ./backend/run.sh
+   
+   # Terminal 2: Frontend
+   cd web && npm run dev
+   ```
 
 ---
-*Built for the Deriv Advanced Agentic AI Challenge.*
+
+## 🏆 Hackathon Context
+**Built for the Deriv Advanced Agentic AI Challenge.**
+*Team: [Your Team Name]*
+
+---
+*Defensor: predicting the preventable, protecting the profitable.*
