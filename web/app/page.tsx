@@ -7,7 +7,7 @@ import Link from "next/link"
 
 
 import { api } from "@/services/api"
-import { DailyBriefing } from "@/components/dashboard/DailyBriefing"
+import { DailyBriefing } from "@/components/dashboard/DailyBriefingComponent"
 
 export default async function Home() {
     const stats = await api.getStats()
@@ -30,6 +30,7 @@ export default async function Home() {
                     trendLabel="from last month"
                     icon={<AlertTriangle size={20} />}
                     color="red"
+                    variant="premium"
                 />
                 <KpiCard
                     title="Recoverable Revenue"
@@ -37,6 +38,7 @@ export default async function Home() {
                     trendLabel="High probability success"
                     icon={<DollarSign size={20} />}
                     color="green"
+                    variant="premium"
                 />
                 <Link href="/interventions" className="block">
                     <KpiCard
@@ -45,6 +47,7 @@ export default async function Home() {
                         trendLabel="Assignments pending"
                         icon={<Activity size={20} />}
                         color="blue"
+                        variant="premium"
                     />
                 </Link>
 

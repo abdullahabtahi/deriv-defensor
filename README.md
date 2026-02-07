@@ -1,7 +1,7 @@
 # Deriv Defensor
 > **The Agentic Decisioning Platform for Partner Retention.**
 
-![Dashboard Overview](docs/images/dashboard-hero.png)
+![CRM & Intervention Dashboard](docs/images/dashboard-hero.png)
 
 ## 🚨 The $10M Problem
 Affiliate partner churn is a silent revenue killer. By the time a high-value partner stops referring, it's too late. Traditional dashboards show you *what* happened. **Defensor shows you what *will* happen—and fixes it.**

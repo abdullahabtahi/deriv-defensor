@@ -9,9 +9,10 @@ interface KpiCardProps {
     trendLabel?: string
     icon?: React.ReactNode
     color?: "red" | "green" | "blue" | "orange"
+    variant?: "default" | "premium"
 }
 
-export function KpiCard({ title, value, trend, trendLabel, icon, color = "blue" }: KpiCardProps) {
+export function KpiCard({ title, value, trend, trendLabel, icon, color = "blue", variant = "default" }: KpiCardProps) {
     const isPositive = trend && trend > 0
     const isNegative = trend && trend < 0
 
@@ -20,6 +21,71 @@ export function KpiCard({ title, value, trend, trendLabel, icon, color = "blue" 
         green: "border-l-deriv-green text-deriv-green bg-deriv-green/5",
         blue: "border-l-deriv-blue text-deriv-blue bg-deriv-blue/5",
         orange: "border-l-deriv-orange text-deriv-orange bg-deriv-orange/5",
+    }
+
+    if (variant === "premium") {
+        const premiumConfig = {
+            red: {
+                glow: "bg-[#FF444F]",
+                iconWrapper: "bg-[#FF444F]/10 border-[#FF444F]/20 text-[#FF444F]",
+                trendPositive: "text-[#FF444F] bg-[#FF444F]/10",
+                trendNegative: "text-emerald-400 bg-emerald-500/10"
+            },
+            green: {
+                glow: "bg-emerald-500",
+                iconWrapper: "bg-emerald-500/10 border-emerald-500/20 text-emerald-400",
+                trendPositive: "text-emerald-400 bg-emerald-500/10",
+                trendNegative: "text-[#FF444F] bg-[#FF444F]/10"
+            },
+            blue: {
+                // Using a vivid blue for the glow
+                glow: "bg-blue-500",
+                iconWrapper: "bg-blue-500/10 border-blue-500/20 text-blue-400",
+                trendPositive: "text-blue-400 bg-blue-500/10",
+                trendNegative: "text-orange-400 bg-orange-500/10"
+            },
+            orange: {
+                glow: "bg-orange-500",
+                iconWrapper: "bg-orange-500/10 border-orange-500/20 text-orange-400",
+                trendPositive: "text-orange-400 bg-orange-500/10",
+                trendNegative: "text-gray-400 bg-gray-500/10"
+            }
+        }
+
+        const styles = premiumConfig[color] || premiumConfig.blue
+
+        return (
+            <div className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-xl shadow-lg border border-gray-800 group transition-all hover:scale-[1.02] hover:shadow-xl duration-300">
+                <div className={cn("absolute top-0 right-0 w-32 h-32 rounded-full mix-blend-overlay filter blur-[60px] opacity-15 group-hover:opacity-25 transition-opacity duration-700", styles.glow)}></div>
+
+                <div className="relative p-6">
+                    <div className="flex flex-row items-center justify-between space-y-0 pb-2 mb-2">
+                        <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                            {title}
+                        </div>
+                        {icon && <div className={cn("p-2 rounded-lg border shadow-sm backdrop-blur-sm", styles.iconWrapper)}>{icon}</div>}
+                    </div>
+
+                    <div className="text-3xl font-bold text-white mb-2 tracking-tight">{value}</div>
+
+                    {(trend || trendLabel) && (
+                        <p className="text-xs font-medium flex items-center gap-2">
+                            <span className={cn(
+                                "flex items-center gap-1 px-1.5 py-0.5 rounded font-semibold",
+                                isPositive && styles.trendPositive,
+                                isNegative && styles.trendNegative,
+                                !isPositive && !isNegative && "text-gray-400"
+                            )}>
+                                {isPositive && <ArrowUpRight size={12} strokeWidth={3} />}
+                                {isNegative && <ArrowDownRight size={12} strokeWidth={3} />}
+                                {trend ? `${Math.abs(trend)}%` : ""}
+                            </span>
+                            <span className="text-gray-500">{trendLabel}</span>
+                        </p>
+                    )}
+                </div>
+            </div>
+        )
     }
 
     return (

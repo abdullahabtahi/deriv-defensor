@@ -44,7 +44,9 @@ export default async function InterventionsPage() {
                                         className={
                                             log.status === 'Completed'
                                                 ? 'bg-green-50 text-green-700 border-green-200'
-                                                : 'bg-blue-50 text-blue-700 border-blue-200'
+                                                : log.status === 'Failed'
+                                                    ? 'bg-red-50 text-red-700 border-red-200'
+                                                    : 'bg-blue-50 text-blue-700 border-blue-200'
                                         }
                                     >
                                         {log.status}
