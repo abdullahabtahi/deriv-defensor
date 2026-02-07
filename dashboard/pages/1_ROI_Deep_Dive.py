@@ -76,7 +76,32 @@ for i in random_indices:
         rnd_saved_revenue += (ltv.iloc[i] * (success_rate / 100.0))
 rnd_net_profit = rnd_saved_revenue - rnd_invested
 
+# Calculate ROI lift for use in visualizations
+roi_lift = ai_net_profit / rnd_net_profit if rnd_net_profit > 0 else 0
+
 # --- VISUALIZATIONS ---
+
+# Headline ROI Card (Maximum Impact)
+st.markdown(f"""
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 30px;">
+    <h2 style="color: white; margin: 0; font-size: 1.2rem; font-weight: 400;">🎯 MODEL PERFORMANCE</h2>
+    <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+        <div>
+            <div style="color: #e0e0e0; font-size: 0.9rem;">Random Targeting</div>
+            <div style="color: white; font-size: 2rem; font-weight: 700;">${rnd_net_profit:,.0f}</div>
+        </div>
+        <div>
+            <div style="color: #e0e0e0; font-size: 0.9rem;">AI-Guided</div>
+            <div style="color: white; font-size: 2rem; font-weight: 700;">${ai_net_profit:,.0f}</div>
+        </div>
+    </div>
+    <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
+        <div style="color: #ffd700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">ROI Improvement</div>
+        <div style="color: white; font-size: 3rem; font-weight: 900;">{roi_lift:.2f}x ✨</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 # Row 1: The Big Picture (KPIs)
 col1, col2, col3 = st.columns(3)

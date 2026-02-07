@@ -3,6 +3,16 @@ import numpy as np
 import pickle
 import streamlit as st
 import os
+import sys
+
+# Add project root to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Import ExplainabilityEngine so pickle can deserialize it
+try:
+    from models.explain_model import ExplainabilityEngine
+except ImportError:
+    pass  # Graceful degradation if module not found
 
 @st.cache_resource
 def load_data():
@@ -37,7 +47,9 @@ def load_explainer():
         with open('models/explainer.pkl', 'rb') as f:
             explainer = pickle.load(f)
         return explainer
-    except FileNotFoundError:
+    except (FileNotFoundError, AttributeError) as e:
+        # AttributeError occurs when class definition is not available
+        # This is non-critical for dashboard functionality
         return None
 
 def calculate_empc(y_true, y_pred_proba, ltv, intervention_cost, save_probability, top_k_percent=0.2):
