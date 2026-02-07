@@ -12,34 +12,26 @@ import {
 import { Button } from "@/components/ui/button"
 import { Brain, TrendingUp, AlertTriangle, ShieldCheck } from "lucide-react"
 
-export function IntelligenceBriefingModal() {
-    const [open, setOpen] = useState(false)
+interface IntelligenceBriefingModalProps {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+}
+
+export function IntelligenceBriefingModal({ open, onOpenChange }: IntelligenceBriefingModalProps) {
     const [briefingDate, setBriefingDate] = useState("")
 
     useEffect(() => {
-        // Check local storage for today's briefing
-        const today = new Date().toISOString().split('T')[0]
-        const lastSeen = localStorage.getItem('lastSeenBriefing')
-
         setBriefingDate(new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }))
-
-        if (lastSeen !== today) {
-            // Add a small delay for dramatic effect
-            const timer = setTimeout(() => {
-                setOpen(true)
-            }, 1500)
-            return () => clearTimeout(timer)
-        }
     }, [])
 
     const handleAcknowledge = () => {
         const today = new Date().toISOString().split('T')[0]
         localStorage.setItem('lastSeenBriefing', today)
-        setOpen(false)
+        onOpenChange(false)
     }
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[600px] border-deriv-red/20 shadow-2xl">
                 <DialogHeader className="border-b border-gray-100 pb-4">
                     <DialogTitle className="flex items-center gap-2 text-xl font-bold text-gray-900">

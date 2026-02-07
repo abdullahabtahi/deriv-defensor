@@ -7,7 +7,7 @@ import Link from "next/link"
 
 
 import { api } from "@/services/api"
-import { IntelligenceBriefingModal } from "@/components/dashboard/IntelligenceBriefingModal"
+import { DailyBriefing } from "@/components/dashboard/DailyBriefing"
 
 export default async function Home() {
     const stats = await api.getStats()
@@ -68,7 +68,7 @@ export default async function Home() {
                 </div>
             </div>
 
-            <IntelligenceBriefingModal />
+            <DailyBriefing />
         </div>
     )
 }

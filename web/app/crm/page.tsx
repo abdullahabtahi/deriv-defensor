@@ -19,6 +19,9 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
+import { IntelligenceBriefingModal } from "@/components/dashboard/IntelligenceBriefingModal"
+import { PartnerGenAIModal } from "@/components/dashboard/PartnerGenAIModal"
+
 
 const MOCK_CRM_TASKS = [
     {
@@ -85,6 +88,9 @@ const MOCK_CRM_TASKS = [
 
 export default function CRMPage() {
     const [tasks] = useState(MOCK_CRM_TASKS)
+    const [showDailyBriefing, setShowDailyBriefing] = useState(false)
+    const [selectedPartner, setSelectedPartner] = useState<{ id: string, risk: number } | null>(null)
+
 
     const getPriorityColor = (priority: string) => {
         switch (priority) {
@@ -178,11 +184,20 @@ export default function CRMPage() {
                                     Our predictive engine has identified high-value partners at risk. Immediate action on these tasks could protect an estimated <strong className="text-white border-b border-[#FF444F]/50 pb-0.5">$4.2M in annual revenue</strong>.
                                 </p>
                             </div>
-                            <Button className="shrink-0 bg-white text-gray-900 hover:bg-gray-100 font-semibold shadow-glow transition-all hover:scale-105 active:scale-95 px-6">
+                            <Button
+                                onClick={() => setShowDailyBriefing(true)}
+                                className="shrink-0 bg-white text-gray-900 hover:bg-gray-100 font-semibold shadow-glow transition-all hover:scale-105 active:scale-95 px-6"
+                            >
                                 View Analysis Report <ArrowUpRight size={16} className="ml-2" />
                             </Button>
                         </div>
                     </motion.div>
+
+                    <IntelligenceBriefingModal
+                        open={showDailyBriefing}
+                        onOpenChange={setShowDailyBriefing}
+                    />
+
 
                     {/* Quick Stats - Enhanced Cards */}
                     <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -279,9 +294,14 @@ export default function CRMPage() {
                                                     <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg">
                                                         <MoreHorizontal size={16} />
                                                     </Button>
-                                                    <Button size="sm" className="h-8 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300 shadow-sm rounded-lg font-medium text-xs">
-                                                        Acknowledge
+                                                    <Button
+                                                        size="sm"
+                                                        onClick={() => setSelectedPartner({ id: task.partner_id, risk: task.priority === "Critical" ? 92 : 75 })}
+                                                        className="h-8 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300 shadow-sm rounded-lg font-medium text-xs"
+                                                    >
+                                                        Analyze Risk
                                                     </Button>
+
                                                 </div>
                                             </td>
                                         </motion.tr>
@@ -292,7 +312,16 @@ export default function CRMPage() {
                     </motion.div>
                 </motion.div>
             </div>
+
+            {/* Modals */}
+            <PartnerGenAIModal
+                isOpen={!!selectedPartner}
+                onClose={() => setSelectedPartner(null)}
+                partnerId={selectedPartner?.id || ""}
+                riskScore={selectedPartner?.risk || 0}
+            />
         </div>
     )
 }
+
 

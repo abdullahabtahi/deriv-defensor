@@ -2,21 +2,29 @@ import os
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import List, Optional, Dict, Any
+from typing import Optional, Dict, Any
 from dotenv import load_dotenv
 from postgrest import SyncPostgrestClient
-
-# Load environment variables from backend directory
-env_path = Path(__file__).parent / ".env"
-load_dotenv(dotenv_path=env_path)
-
-
 from fastapi.middleware.cors import CORSMiddleware
+
+# Load environment variables from backend directory and root
+env_path = Path(__file__).resolve().parent / ".env"
+root_env = Path(__file__).resolve().parent.parent / ".env"
+cwd_env = Path.cwd() / ".env"
+print(f"__file__: {__file__}")
+print(f"Resolved main.py: {Path(__file__).resolve()}")
+print(f"Loading env from: {env_path}, exists: {env_path.exists()}")
+print(f"Loading env from: {root_env}, exists: {root_env.exists()}")
+print(f"Loading env from: {cwd_env}, exists: {cwd_env.exists()}")
+load_dotenv(dotenv_path=env_path)
+load_dotenv(dotenv_path=root_env, override=True)
+load_dotenv(dotenv_path=cwd_env, override=True)
 
 app = FastAPI(title="Deriv Defensor API")
 
 # Enable CORS
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:3003").split(",")
+allowed_origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:3003,http://localhost:3004,http://localhost:3005")
+allowed_origins = allowed_origins_env.split(",")
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,10 +33,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-
-# Supabase Client (Using PostgREST directly)
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
@@ -47,6 +51,9 @@ else:
     except Exception as e:
         print(f"Error initializing Supabase client: {e}")
         supabase = None
+
+from agents.genai_explainer import GenAIExplainer
+explainer = GenAIExplainer()
 
 # --- Pydantic Models ---
 class AgentSummaryRequest(BaseModel):
@@ -100,6 +107,59 @@ def get_partner(partner_id: str):
     except HTTPException:
         raise
     except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/partners/{partner_id}/trigger")
+def trigger_partner_analysis(partner_id: str):
+    """
+    Trigger AI analysis for a partner and save it.
+    """
+    if not supabase:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+
+    try:
+        # 1. Fetch partner data
+        response = supabase.from_("partners").select("*").eq("partner_id", partner_id).execute()
+        if not response.data:
+            raise HTTPException(status_code=404, detail="Partner not found")
+        
+        partner = response.data[0]
+        
+        # 2. Generate summary using Explainer
+        # Mock some reason codes based on partner data
+        reasons = [
+            {'feature': 'login_trend_30d', 'description': f'Login frequency dropped {abs(partner.get("login_trend_30d", 0))}%', 'impact_score': 8.0},
+            {'feature': 'tier_proximity_score', 'description': f'Usage patterns inconsistent with {partner.get("tier")} tier expectations', 'impact_score': 5.0}
+        ]
+        
+        narrative = explainer.generate_narrative(partner, partner.get('churn_prob', 0.5), reasons)
+        
+        # 3. Save to agent_summaries
+        data = {
+            "partner_id": partner_id,
+            "churn_tendency": partner.get('churn_prob', 0.5),
+            "summary": narrative,
+            "metrics": {
+                "login_velocity": partner.get("login_trend_30d", 0) / 100,
+                "urgency": partner.get("urgency_score", 50)
+            }
+        }
+        
+        supabase.from_("agent_summaries").insert(data).execute()
+        
+        # 4. Log an intervention
+        intervention = {
+            "partner_id": partner_id,
+            "action_type": "AI Investigation",
+            "status": "Completed",
+            "explanation_text": narrative[:200], # Add snippet of summary
+            "outcome_label": "Saved" if partner.get('churn_prob', 0.5) < 0.6 else None
+        }
+        supabase.from_("interventions").insert(intervention).execute()
+
+        return {"status": "success", "summary": narrative}
+    except Exception as e:
+        print(f"Error triggering analysis: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/partners/{partner_id}/summary")
