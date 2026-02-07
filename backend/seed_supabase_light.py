@@ -4,10 +4,17 @@ import os
 import time
 import requests
 
-# --- Configuration ---
-# Hardcoding for this run since env vars are flaky in this specific shell context
-SUPABASE_URL = "https://gmacvzranexqivmqovba.supabase.co"
-SUPABASE_KEY = "sb_publishable_QXtnAWiracWF4pPaPimejQ_upZRD-6T"
+# Credentials should be set in environment variables
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+if not SUPABASE_URL or not SUPABASE_KEY:
+    # Try loading from .env if available
+    from dotenv import load_dotenv
+    load_dotenv()
+    SUPABASE_URL = os.getenv("SUPABASE_URL")
+    SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
 DATA_DIR = "../data"
 
 HEADERS = {

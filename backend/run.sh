@@ -10,9 +10,15 @@ if [ ! -d "venv" ]; then
     exit 1
 fi
 
-# Explicitly export Supabase credentials for the backend
-export SUPABASE_URL=https://gmacvzranexqivmqovba.supabase.co
-export SUPABASE_KEY=sb_publishable_QXtnAWiracWF4pPaPimejQ_upZRD-6T
+# Credentials should be set in environment or .env file
+# Exporting them here is only for local dev convenience if not using .env
+if [ -z "$SUPABASE_URL" ]; then
+    export $(grep SUPABASE_URL .env | xargs)
+fi
+if [ -z "$SUPABASE_KEY" ]; then
+    export $(grep SUPABASE_KEY .env | xargs)
+fi
+
 
 echo "🚀 Starting FastAPI Backend on port 8001..."
 source venv/bin/activate

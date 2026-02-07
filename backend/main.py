@@ -13,13 +13,16 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(title="Deriv Defensor API")
 
 # Enable CORS
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:3003").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify the actual origin
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 # Supabase Client (Using PostgREST directly)
