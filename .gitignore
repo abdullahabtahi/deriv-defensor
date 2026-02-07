@@ -5,3 +5,4 @@ __pycache__/
 .agent/
 data/*.csv
 .env
+\n# Dev Environments\n.*venv*\n.venv*\n\n# Artifacts\nmodels/*.pkl

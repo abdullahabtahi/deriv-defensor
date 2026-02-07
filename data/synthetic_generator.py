@@ -638,9 +638,9 @@ def main():
     
     # 6. Save to CSV
     print("\nSaving data to CSV...")
-    partners_df.to_csv('data/partners.csv', index=False)
-    network_df.to_csv('data/network_relationships.csv', index=False)
-    interventions_df.to_csv('data/interventions.csv', index=False)
+    partners_df.to_csv('dataset/partners.csv', index=False)
+    network_df.to_csv('dataset/network_relationships.csv', index=False)
+    interventions_df.to_csv('dataset/interventions.csv', index=False)
     
     # 7. Print summary
     print("\n" + "="*60)
