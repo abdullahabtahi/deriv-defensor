@@ -1,12 +1,15 @@
 import os
+from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 from dotenv import load_dotenv
 from postgrest import SyncPostgrestClient
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from backend directory
+env_path = Path(__file__).parent / ".env"
+load_dotenv(dotenv_path=env_path)
+
 
 from fastapi.middleware.cors import CORSMiddleware
 

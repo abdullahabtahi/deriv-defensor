@@ -33,7 +33,8 @@ export default function DTraderHeader() {
 
             {/* Right: Account & Notifications */}
             <div className="flex items-center gap-4">
-                {/* Account Switcher */}
+                {/* Account Switcher - Removed for demo */}
+                {/* 
                 <div className="flex flex-col items-end cursor-pointer group">
                     <span className="text-xs text-gray-500 uppercase font-semibold">Real Account</span>
                     <div className="flex items-center gap-1">
@@ -44,8 +45,8 @@ export default function DTraderHeader() {
                     </div>
                 </div>
 
-                {/* Divider */}
                 <div className="h-6 w-[1px] bg-gray-200 mx-1"></div>
+                */}
 
                 {/* Icons */}
                 <button className="text-gray-600 hover:text-gray-900 transition-colors p-1">
