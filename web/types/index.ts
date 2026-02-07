@@ -1,6 +1,7 @@
 export interface PartnerRisk {
-    partner_id: str
-    region: str
+    partner_id: string
+    region: string
+
     tier: 'Bronze' | 'Silver' | 'Gold' | 'Platinum'
     churn_prob: number
     risk_category: 'High' | 'Medium' | 'Low'

@@ -8,10 +8,11 @@ import { cn } from "@/lib/utils"
 const navItems = [
     { href: "/", label: "Dashboard", icon: LayoutDashboard },
     { href: "/interventions", label: "Intervention Log", icon: History },
-    { href: "#", label: "CRM Tasks", icon: Briefcase },
-    { href: "#", label: "ROI Deep Dive", icon: BarChart3 },
-    { href: "#", label: "Alert Monitor", icon: ShieldAlert },
+    { href: "/crm", label: "CRM Tasks", icon: Briefcase },
+    { href: "/roi", label: "ROI Deep Dive", icon: BarChart3 },
+    { href: "/alerts", label: "Alert Monitor", icon: ShieldAlert },
 ]
+
 
 
 export default function Sidebar() {

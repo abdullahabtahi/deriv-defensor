@@ -3,6 +3,8 @@ import { RiskChart } from "@/components/dashboard/RiskChart"
 import { PartnerList } from "@/components/dashboard/PartnerList"
 import { MOCK_STATS } from "@/services/api"
 import { AlertTriangle, DollarSign, Activity } from "lucide-react"
+import Link from "next/link"
+
 
 import { api } from "@/services/api"
 
@@ -35,13 +37,16 @@ export default async function Home() {
                     icon={<DollarSign size={20} />}
                     color="green"
                 />
-                <KpiCard
-                    title="Active Interventions"
-                    value={stats.activeInterventions}
-                    trendLabel="Assignments pending"
-                    icon={<Activity size={20} />}
-                    color="blue"
-                />
+                <Link href="/interventions" className="block">
+                    <KpiCard
+                        title="Active Interventions"
+                        value={stats.activeInterventions}
+                        trendLabel="Assignments pending"
+                        icon={<Activity size={20} />}
+                        color="blue"
+                    />
+                </Link>
+
             </div>
 
             {/* Main Content Area */}

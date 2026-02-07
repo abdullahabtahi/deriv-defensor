@@ -1,11 +1,15 @@
 import { api } from "@/services/api"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { GenAIExplanation } from "@/components/analysis/GenAIExplanation"
-import { ShapChart } from "@/components/analysis/ShapChart"
-import { ArrowLeft, Send, ExternalLink } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import dynamic from "next/dynamic"
+import { PartnerActions } from "@/components/partners/PartnerActions"
+import { Button } from "@/components/ui/button"
+
+const GenAIExplanation = dynamic(() => import("@/components/analysis/GenAIExplanation").then(mod => mod.GenAIExplanation), { ssr: false })
+const ShapChart = dynamic(() => import("@/components/analysis/ShapChart").then(mod => mod.ShapChart), { ssr: false })
+
 
 export default async function PartnerPage({ params }: { params: { id: string } }) {
     const partner = await api.getPartner(params.id)
@@ -35,16 +39,8 @@ export default async function PartnerPage({ params }: { params: { id: string } }
                         <p className="text-gray-500 text-sm">Region: {partner.region} • Partner since: {partner.join_date}</p>
                     </div>
                 </div>
-                <div className="flex gap-2">
-                    <Button variant="outline" className="gap-2">
-                        <ExternalLink size={16} />
-                        View CRM
-                    </Button>
-                    <Button className="bg-deriv-red hover:bg-deriv-red/90 gap-2">
-                        <Send size={16} />
-                        Trigger Intervention
-                    </Button>
-                </div>
+                <PartnerActions partnerId={partner.partner_id} />
+
             </div>
 
             {/* Content Grid */}
