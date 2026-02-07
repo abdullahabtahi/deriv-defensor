@@ -1,8 +1,12 @@
 .DS_Store
 venv/
+.venv*/
+*venv*/
 __pycache__/
 .pytest_cache/
 .agent/
 data/*.csv
 .env
-\n# Dev Environments\n.*venv*\n.venv*\n\n# Artifacts\nmodels/*.pkl
+
+# Artifacts
+models/*.pkl
