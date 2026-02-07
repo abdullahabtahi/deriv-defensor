@@ -1,0 +1,92 @@
+/* Global Styling - Deriv Corporate Clean */
+/* Coral Red: #FF444F from Brand Guidelines */
+
+/* Main App Background */
+.stApp {
+    background-color: #F2F3F5;  /* Light Grey Background */
+    color: #333333;             /* Dark Grey Text */
+    font-family: 'Inter', 'Roboto', sans-serif;
+}
+
+/* Sidebar Styling */
+section[data-testid="stSidebar"] {
+    background-color: #FFFFFF;
+    border-right: 1px solid #E6E8EB;
+}
+
+/* Metric Card - Red (Risk) */
+.metric-card {
+    background-color: #FFFFFF;
+    border-left: 5px solid #FF444F; /* Coral Red */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle Shadow */
+    transition: transform 0.2s;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Metric Card - Green (Opportunity) */
+.metric-card-green {
+    background-color: #FFFFFF;
+    border-left: 5px solid #2ECC71; /* Green */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Big Statistic Text */
+.big-stat {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #333333; /* Dark Text */
+    margin-top: 5px;
+}
+
+/* Sub Statistic Label */
+.sub-stat {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #858D9D; /* Medium Grey */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Live Feed Item */
+.live-feed-item {
+    background-color: #FFFFFF;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    border-left: 3px solid #3498DB; /* Blue for info */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.feed-timestamp {
+    font-size: 0.75rem;
+    color: #999999;
+    margin-bottom: 4px;
+}
+
+/* Streamlit Header Overrides */
+h1, h2, h3 {
+    color: #333333 !important;
+}
+
+/* Custom Alert Box - Red */
+.alert-box-red {
+    background-color: #FFF5F6;
+    border: 1px solid #FFCDD2;
+    color: #C62828;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Button Styling (approximate override if class available, but usually handled by theme) */
+/* Focus on primary button color being red */

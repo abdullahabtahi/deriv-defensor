@@ -15,50 +15,15 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for "QuantumBlack" feel
-st.markdown("""
-<style>
-    .reportview-container {
-        background: #0e1117;
-    }
-    .metric-card {
-        background-color: #1a1c24;
-        border-left: 5px solid #ff4b4b;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
-    .metric-card-green {
-        background-color: #1a1c24;
-        border-left: 5px solid #2ecc71;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
-    .big-stat {
-        font-size: 2.2rem;
-        font-weight: 700;
-        color: #ffffff;
-    }
-    .sub-stat {
-        font-size: 0.9rem;
-        color: #a0a0a0;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    .live-feed-item {
-        background-color: #262730;
-        padding: 10px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        border-left: 3px solid #3498db;
-    }
-    .feed-timestamp {
-        font-size: 0.8rem;
-        color: #888;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Load Corporate Clean CSS
+def load_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+try:
+    load_css("dashboard/style.css")
+except FileNotFoundError:
+    st.warning("CSS file not found. Please ensure dashboard/style.css exists.")
 
 def main():
     st.title("🛡️ Churn Intervention Command Center")
@@ -178,7 +143,7 @@ def main():
                 <div class="live-feed-item">
                     <div class="feed-timestamp">Just now • {partner['partner_id']} • {partner['tier']}</div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div style="font-weight:bold; color:#ff4b4b;">Risk: {partner['churn_prob']:.1%}</div>
+                        <div style="font-weight:bold; color:#FF444F;">Risk: {partner['churn_prob']:.1%}</div>
                         <div style="font-size: 0.9rem;">{urgency_label}</div>
                     </div>
                     <div>🤖 <i>Analyzing drivers...</i></div>

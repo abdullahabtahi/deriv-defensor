@@ -182,15 +182,16 @@ if selected_partner_id:
         with reason_cols[idx]:
             impact_color = "#ff4b4b" if reason['impact_score'] > 8 else "#ffa500" if reason['impact_score'] > 4 else "#00c853"
             st.markdown(f"""
-            <div style="background: #1e1e2e; padding: 15px; border-radius: 8px; 
-                        border-top: 3px solid {impact_color}; text-align: center;">
+            <div style="background: #FFFFFF; padding: 15px; border-radius: 8px; 
+                        border-top: 3px solid {impact_color}; text-align: center;
+                        box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
                 <div style="color: {impact_color}; font-size: 1.8rem; font-weight: 700;">
                     {reason['impact_score']:.1f}
                 </div>
-                <div style="color: #888; font-size: 0.8rem; text-transform: uppercase;">
+                <div style="color: #666; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;">
                     Impact Score
                 </div>
-                <div style="color: white; margin-top: 10px; font-size: 0.95rem;">
+                <div style="color: #333; margin-top: 10px; font-size: 0.95rem;">
                     {reason['description']}
                 </div>
             </div>

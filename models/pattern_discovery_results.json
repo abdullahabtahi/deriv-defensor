@@ -1,0 +1,162 @@
+{
+  "top_interactions": [
+    {
+      "feature1": "revenue_velocity",
+      "feature2": "commission_trend_90d",
+      "churn_feat1_only": 0.28545359749739313,
+      "churn_feat2_only": 0.07714285714285714,
+      "churn_combined": 0.8303821062441752,
+      "churn_neither": 0.006749630879561274,
+      "expected_combined": 0.15809645464025027,
+      "synergy": 0.672285651603925,
+      "lift_vs_baseline": 4.060548196793033,
+      "n_combined": 1073
+    },
+    {
+      "feature1": "payment_delay_flag",
+      "feature2": "revenue_velocity",
+      "churn_feat1_only": 0.041379310344827586,
+      "churn_feat2_only": 0.38155515370705245,
+      "churn_combined": 0.6144329896907217,
+      "churn_neither": 0.009789627161008124,
+      "expected_combined": 0.21843446405188008,
+      "synergy": 0.39599852563884164,
+      "lift_vs_baseline": 3.0045622967761454,
+      "n_combined": 485
+    },
+    {
+      "feature1": "revenue_velocity",
+      "feature2": "login_count_30d",
+      "churn_feat1_only": 0.37968786396459353,
+      "churn_feat2_only": 0.023157894736842106,
+      "churn_combined": 0.577922077922078,
+      "churn_neither": 0.010398613518197574,
+      "expected_combined": 0.19834575870143564,
+      "synergy": 0.3795763192206423,
+      "lift_vs_baseline": 2.8260248309148066,
+      "n_combined": 616
+    },
+    {
+      "feature1": "days_since_last_interaction",
+      "feature2": "revenue_velocity",
+      "churn_feat1_only": 0.013636363636363636,
+      "churn_feat2_only": 0.3938934603724556,
+      "churn_combined": 0.5738831615120275,
+      "churn_neither": 0.011496612605214535,
+      "expected_combined": 0.20302982400881922,
+      "synergy": 0.37085333750320826,
+      "lift_vs_baseline": 2.806274628420672,
+      "n_combined": 291
+    },
+    {
+      "feature1": "tier_proximity_score",
+      "feature2": "revenue_velocity",
+      "churn_feat1_only": 0.021505376344086023,
+      "churn_feat2_only": 0.3671346853874155,
+      "churn_combined": 0.5399811853245532,
+      "churn_neither": 0.009637987776210626,
+      "expected_combined": 0.18414006173150152,
+      "synergy": 0.35584112359305164,
+      "lift_vs_baseline": 2.6404947937630965,
+      "n_combined": 1063
+    },
+    {
+      "feature1": "revenue_velocity",
+      "feature2": "tenure_months",
+      "churn_feat1_only": 0.3780276816608997,
+      "churn_feat2_only": 0.014184397163120567,
+      "churn_combined": 0.46842470506592643,
+      "churn_neither": 0.010594947025264874,
+      "expected_combined": 0.18771207882402027,
+      "synergy": 0.2807126262419062,
+      "lift_vs_baseline": 2.2905853548456063,
+      "n_combined": 1441
+    },
+    {
+      "feature1": "revenue_velocity",
+      "feature2": "subnetwork_recent_churn_count",
+      "churn_feat1_only": 0.4039067422810334,
+      "churn_feat2_only": 0.0,
+      "churn_combined": 0.42567567567567566,
+      "churn_neither": 0.011960267585647678,
+      "expected_combined": 0.19940674228103342,
+      "synergy": 0.22626893339464224,
+      "lift_vs_baseline": 2.0815436463358226,
+      "n_combined": 148
+    },
+    {
+      "feature1": "revenue_velocity",
+      "feature2": "negative_sentiment_score",
+      "churn_feat1_only": 0.4036859378944711,
+      "churn_feat2_only": 0.010395010395010396,
+      "churn_combined": 0.40822784810126583,
+      "churn_neither": 0.011867280213126665,
+      "expected_combined": 0.2095809482894815,
+      "synergy": 0.19864689981178432,
+      "lift_vs_baseline": 1.9962241960942095,
+      "n_combined": 948
+    },
+    {
+      "feature1": "commission_trend_90d",
+      "feature2": "subnetwork_recent_churn_count",
+      "churn_feat1_only": 0.6421356421356421,
+      "churn_feat2_only": 0.13011152416356878,
+      "churn_combined": 0.7567567567567568,
+      "churn_neither": 0.13143957631198844,
+      "expected_combined": 0.5677471662992108,
+      "synergy": 0.18900959045754595,
+      "lift_vs_baseline": 3.700522037930351,
+      "n_combined": 37
+    },
+    {
+      "feature1": "unresolved_ticket_count",
+      "feature2": "revenue_velocity",
+      "churn_feat1_only": 0.004149377593360996,
+      "churn_feat2_only": 0.4062430323299889,
+      "churn_combined": 0.3867924528301887,
+      "churn_neither": 0.012367107832501627,
+      "expected_combined": 0.20589240992334987,
+      "synergy": 0.18090004290683884,
+      "lift_vs_baseline": 1.8914056373114363,
+      "n_combined": 424
+    }
+  ],
+  "discovered_patterns": [
+    {
+      "pattern": "revenue_velocity \u00d7 commission_trend_90d",
+      "insight": "DISCOVERED: revenue_velocity combined with commission_trend_90d creates 67% additional churn risk beyond what each factor alone would predict. This interaction was NOT explicitly programmed.",
+      "synergy": 0.672285651603925,
+      "lift": 4.060548196793033,
+      "evidence_count": 1073
+    },
+    {
+      "pattern": "payment_delay_flag \u00d7 revenue_velocity",
+      "insight": "DISCOVERED: payment_delay_flag combined with revenue_velocity creates 40% additional churn risk beyond what each factor alone would predict. This interaction was NOT explicitly programmed.",
+      "synergy": 0.39599852563884164,
+      "lift": 3.0045622967761454,
+      "evidence_count": 485
+    },
+    {
+      "pattern": "revenue_velocity \u00d7 login_count_30d",
+      "insight": "DISCOVERED: revenue_velocity combined with login_count_30d creates 38% additional churn risk beyond what each factor alone would predict. This interaction was NOT explicitly programmed.",
+      "synergy": 0.3795763192206423,
+      "lift": 2.8260248309148066,
+      "evidence_count": 616
+    },
+    {
+      "pattern": "days_since_last_interaction \u00d7 revenue_velocity",
+      "insight": "DISCOVERED: days_since_last_interaction combined with revenue_velocity creates 37% additional churn risk beyond what each factor alone would predict. This interaction was NOT explicitly programmed.",
+      "synergy": 0.37085333750320826,
+      "lift": 2.806274628420672,
+      "evidence_count": 291
+    },
+    {
+      "pattern": "tier_proximity_score \u00d7 revenue_velocity",
+      "insight": "DISCOVERED: tier_proximity_score combined with revenue_velocity creates 36% additional churn risk beyond what each factor alone would predict. This interaction was NOT explicitly programmed.",
+      "synergy": 0.35584112359305164,
+      "lift": 2.6404947937630965,
+      "evidence_count": 1063
+    }
+  ],
+  "report": "\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n                    PATTERN DISCOVERY REPORT\n                    AI-Learned Insights Beyond Explicit Rules\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nEXECUTIVE SUMMARY:\nOur machine learning model discovered 5 significant interaction\npatterns that were NOT explicitly programmed into the synthetic data generator.\nThese findings demonstrate genuine pattern learning, not just rule memorization.\n\nDISCOVERED PATTERNS:\n\n1. revenue_velocity \u00d7 commission_trend_90d\n   \u251c\u2500 Synergy Effect: +67.2% additional risk\n   \u251c\u2500 Risk Multiplier: 4.1x baseline\n   \u251c\u2500 Evidence: 1073 partners\n   \u2514\u2500 Insight: DISCOVERED: revenue_velocity combined with commission_trend_90d creates 67% additional churn risk beyond what each factor alone would predict. This interaction was NOT explicitly programmed.\n\n2. payment_delay_flag \u00d7 revenue_velocity\n   \u251c\u2500 Synergy Effect: +39.6% additional risk\n   \u251c\u2500 Risk Multiplier: 3.0x baseline\n   \u251c\u2500 Evidence: 485 partners\n   \u2514\u2500 Insight: DISCOVERED: payment_delay_flag combined with revenue_velocity creates 40% additional churn risk beyond what each factor alone would predict. This interaction was NOT explicitly programmed.\n\n3. revenue_velocity \u00d7 login_count_30d\n   \u251c\u2500 Synergy Effect: +38.0% additional risk\n   \u251c\u2500 Risk Multiplier: 2.8x baseline\n   \u251c\u2500 Evidence: 616 partners\n   \u2514\u2500 Insight: DISCOVERED: revenue_velocity combined with login_count_30d creates 38% additional churn risk beyond what each factor alone would predict. This interaction was NOT explicitly programmed.\n\n4. days_since_last_interaction \u00d7 revenue_velocity\n   \u251c\u2500 Synergy Effect: +37.1% additional risk\n   \u251c\u2500 Risk Multiplier: 2.8x baseline\n   \u251c\u2500 Evidence: 291 partners\n   \u2514\u2500 Insight: DISCOVERED: days_since_last_interaction combined with revenue_velocity creates 37% additional churn risk beyond what each factor alone would predict. This interaction was NOT explicitly programmed.\n\n5. tier_proximity_score \u00d7 revenue_velocity\n   \u251c\u2500 Synergy Effect: +35.6% additional risk\n   \u251c\u2500 Risk Multiplier: 2.6x baseline\n   \u251c\u2500 Evidence: 1063 partners\n   \u2514\u2500 Insight: DISCOVERED: tier_proximity_score combined with revenue_velocity creates 36% additional churn risk beyond what each factor alone would predict. This interaction was NOT explicitly programmed.\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n\nWHY THIS MATTERS:\nThese interactions prove the model learns RELATIONSHIPS, not just thresholds.\nA rule-based system would miss these multiplicative effects. This is the\ncore value of ML: discovering patterns humans didn't explicitly define.\n\nRECOMMENDED ACTIONS:\n1. Prioritize partners with multiple interacting risk factors\n2. Customize interventions based on the specific pattern detected\n3. Monitor these interaction effects for concept drift over time\n\n\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\n"
+}

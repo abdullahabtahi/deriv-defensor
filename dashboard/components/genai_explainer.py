@@ -48,9 +48,10 @@ def render_genai_explanation(partner_data: dict, reason_codes: list, risk_score:
     
     # Display explanation in styled container
     st.markdown(f"""
-    <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
-                padding: 20px; border-radius: 12px; border-left: 4px solid #00d4ff;">
-        <p style="color: #e0e0e0; font-size: 1.05rem; line-height: 1.6; margin: 0;">
+    <div style="background: #FFFFFF; 
+                padding: 20px; border-radius: 12px; border-left: 4px solid #00d4ff;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <p style="color: #333333; font-size: 1.05rem; line-height: 1.6; margin: 0;">
             {explanation}
         </p>
     </div>
@@ -106,14 +107,15 @@ def render_partner_card(partner: dict, risk_score: float, urgency: dict = None):
     risk_color = "#ff4b4b" if risk_score > 0.7 else "#ffa500" if risk_score > 0.4 else "#00c853"
     
     st.markdown(f"""
-    <div style="background: #1e1e2e; padding: 15px; border-radius: 10px; 
-                border-left: 4px solid {risk_color}; margin-bottom: 10px;">
+    <div style="background: #FFFFFF; padding: 15px; border-radius: 10px; 
+                border-left: 4px solid {risk_color}; margin-bottom: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
-                <span style="color: white; font-weight: 600; font-size: 1.1rem;">
+                <span style="color: #333333; font-weight: 600; font-size: 1.1rem;">
                     {partner.get('partner_id', 'Unknown')}
                 </span>
-                <span style="color: #888; margin-left: 10px;">
+                <span style="color: #666; margin-left: 10px;">
                     {partner.get('tier', '')} • {partner.get('region', '')}
                 </span>
             </div>

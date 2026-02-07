@@ -1,0 +1,33 @@
+{
+  "ideal": {
+    "auc": 0.9939420856006971,
+    "precision": 0.9722921914357683,
+    "recall": 0.9437652811735942,
+    "condition": "Synthetic (Ideal)"
+  },
+  "light_drift": {
+    "auc": 0.9933504323678884,
+    "precision": 0.9742268041237113,
+    "recall": 0.9242053789731052,
+    "condition": "Light Production Drift (Week 1)"
+  },
+  "moderate_drift": {
+    "auc": 0.9947027826143081,
+    "precision": 0.9721518987341772,
+    "recall": 0.9388753056234719,
+    "condition": "Moderate Production Drift (Month 1)"
+  },
+  "heavy_drift": {
+    "auc": 0.9912704254831961,
+    "precision": 0.9526184538653366,
+    "recall": 0.9339853300733496,
+    "condition": "Heavy Production Drift (Quarter 1)"
+  },
+  "cross_validation": {
+    "mean_auc": 0.9937432286440074,
+    "std_auc": 0.0015080844533661303,
+    "min_auc": 0.9924191548118313,
+    "max_auc": 0.9965392127784805
+  },
+  "estimated_production_auc": 0.8945478770406274
+}
