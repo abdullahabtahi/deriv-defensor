@@ -118,19 +118,37 @@ def get_partner_summary(partner_id: str):
 
 @app.get("/stats")
 def get_stats():
-
     """
-    Fetch the latest daily ROI stats.
+    Calculate real-time statistics from partners and interventions data.
+    Calculates dynamically instead of querying daily_stats table.
     """
     if not supabase:
         raise HTTPException(status_code=500, detail="Database connection failed")
-
+    
     try:
-        # Get the most recent entry
-        response = supabase.from_("daily_stats").select("*").order("date", desc=True).limit(1).execute()
-        return response.data[0] if response.data else {}
+        # Get all partners for risk calculation
+        partners_response = supabase.from_("partners").select("ltv, churn_prob").execute()
+        partners = partners_response.data
+        
+        # Calculate total risk exposure (sum of LTV for partners with churn_prob >= 0.5)
+        total_exposure = sum(float(p['ltv']) for p in partners if float(p.get('churn_prob', 0)) >= 0.5)
+        
+        # Calculate recoverable revenue (assume 30% of at-risk LTV is recoverable through intervention)
+        recoverable_revenue = total_exposure * 0.3
+        
+        # Get active interventions count (interventions with status "Pending")
+        interventions_response = supabase.from_("interventions").select("id", count="exact").eq("status", "Pending").execute()
+        active_interventions = interventions_response.count if interventions_response.count else 0
+        
+        return {
+            "total_revenue_exposed": round(total_exposure, 2),
+            "total_recovered_revenue": round(recoverable_revenue, 2),
+            "total_partners_at_risk": active_interventions
+        }
     except Exception as e:
+        print(f"Error calculating stats: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/api/agent-summary")
 def create_agent_summary(request: AgentSummaryRequest):

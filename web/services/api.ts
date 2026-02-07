@@ -53,7 +53,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8001"
 export const api = {
     getStats: async (): Promise<DashboardStats> => {
         try {
-            const response = await fetch(`${API_BASE_URL}/stats`)
+            const response = await fetch(`${API_BASE_URL}/stats`, { cache: 'no-store' })
             if (!response.ok) throw new Error("Failed to fetch stats")
             const data = await response.json()
 

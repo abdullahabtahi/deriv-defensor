@@ -25,9 +25,7 @@ export default function DTraderHeader() {
                     <Link href="/reports" className="hover:text-deriv-red transition-colors">
                         Intervention Log
                     </Link>
-                    <Link href="/cashier" className="hover:text-deriv-red transition-colors">
-                        Partner Analysis
-                    </Link>
+                    {/* Partner Analysis accessed via Dashboard partner rows */}
                 </nav>
             </div>
 

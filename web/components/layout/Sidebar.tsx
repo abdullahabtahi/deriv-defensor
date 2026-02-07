@@ -8,10 +8,12 @@ import { cn } from "@/lib/utils"
 const navItems = [
     { href: "/", label: "Dashboard", icon: LayoutDashboard },
     { href: "/interventions", label: "Intervention Log", icon: History },
+    { href: "/partners", label: "Partner Analysis", icon: Users },
     { href: "/crm", label: "CRM Tasks", icon: Briefcase },
     { href: "/roi", label: "ROI Deep Dive", icon: BarChart3 },
     { href: "/alerts", label: "Alert Monitor", icon: ShieldAlert },
 ]
+
 
 
 
