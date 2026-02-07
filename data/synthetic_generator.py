@@ -225,6 +225,21 @@ def generate_single_partner(partner_id: str, force_scenario: Optional[str] = Non
     partner['dashboard_usage_score'] = round(np.clip(np.random.beta(5, 3), 0, 1), 4)
     partner['asset_download_count_30d'] = max(0, int(np.random.poisson(3)))
     
+    # === NEW: Competitive Signals ===
+    # competitor_mention_count: mentions of competitors in support tickets/feedback
+    # Higher for churning partners (they're shopping around)
+    partner['competitor_mention_count'] = max(0, int(np.random.poisson(0.3)))  # Most have 0
+    # pricing_complaint_flag: has complained about pricing/commission rates
+    partner['pricing_complaint_flag'] = random.random() < 0.12  # 12% have complained
+    
+    # === NEW: Relationship Signals ===
+    # webinar_attendance_rate: % of available webinars attended (0-1)
+    partner['webinar_attendance_rate'] = round(np.clip(np.random.beta(3, 5), 0, 1), 4)
+    # training_completion_count: number of training modules completed (0-10)
+    partner['training_completion_count'] = max(0, min(10, int(np.random.poisson(3))))
+    # program_adoption_score: overall engagement with partner programs (0-100)
+    partner['program_adoption_score'] = round(np.clip(np.random.beta(4, 3) * 100, 0, 100), 2)
+    
     # Trust/Friction metrics
     partner['payment_delay_flag'] = random.random() < 0.08  # 8% have delays
     partner['unresolved_ticket_count'] = max(0, int(np.random.poisson(0.5)))
@@ -266,6 +281,12 @@ def generate_single_partner(partner_id: str, force_scenario: Optional[str] = Non
         if partner.get('negative_sentiment_score', 0) > 0.5:
             churn_prob += 0.10
         
+        # NEW: Competitive signals increase churn probability
+        if partner.get('competitor_mention_count', 0) > 0:
+            churn_prob += 0.12 * partner['competitor_mention_count']  # Each mention adds risk
+        if partner.get('pricing_complaint_flag', False):
+            churn_prob += 0.08
+        
         # Decrease churn probability based on protective factors  
         if partner.get('tenure_months', 0) > 24:
             churn_prob -= 0.08
@@ -273,6 +294,14 @@ def generate_single_partner(partner_id: str, force_scenario: Optional[str] = Non
             churn_prob -= 0.05
         if partner.get('dashboard_usage_score', 0) > 0.7:
             churn_prob -= 0.05
+        
+        # NEW: Relationship signals decrease churn probability
+        if partner.get('webinar_attendance_rate', 0) > 0.6:
+            churn_prob -= 0.06  # Engaged partners less likely to churn
+        if partner.get('training_completion_count', 0) >= 5:
+            churn_prob -= 0.05  # Invested partners less likely to churn
+        if partner.get('program_adoption_score', 0) > 70:
+            churn_prob -= 0.04
             
         # Stochastic churn assignment
         partner['churn_label'] = np.random.binomial(1, np.clip(churn_prob, 0, 0.9)) == 1

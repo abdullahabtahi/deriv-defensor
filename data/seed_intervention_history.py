@@ -69,10 +69,11 @@ def generate_intervention_history(n_interventions: int = 60):
     
     df = pd.DataFrame(history)
     
-    # Ensure data directory exists
-    os.makedirs('data', exist_ok=True)
+    # Use absolute path based on script location
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    output_path = os.path.join(script_dir, 'intervention_log.csv')
     
-    df.to_csv('data/intervention_log.csv', index=False)
+    df.to_csv(output_path, index=False)
     
     # Summary stats
     saved = df[df['status'] == 'saved']

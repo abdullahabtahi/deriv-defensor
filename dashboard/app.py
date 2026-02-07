@@ -167,12 +167,20 @@ def main():
         # We'll just show the "Latest Actions"
         
         for partner in stream:
+            # Get urgency indicator
+            from utils import estimate_churn_urgency
+            urgency = estimate_churn_urgency(partner)
+            urgency_label = urgency['label']
+            
             # Mock GenAI processing viz
             with st.container():
                 st.markdown(f"""
                 <div class="live-feed-item">
                     <div class="feed-timestamp">Just now • {partner['partner_id']} • {partner['tier']}</div>
-                    <div style="font-weight:bold; color:#ff4b4b;">Risk: {partner['churn_prob']:.1%}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-weight:bold; color:#ff4b4b;">Risk: {partner['churn_prob']:.1%}</div>
+                        <div style="font-size: 0.9rem;">{urgency_label}</div>
+                    </div>
                     <div>🤖 <i>Analyzing drivers...</i></div>
                     <div>Login Trend: {partner['login_trend_30d']:.2f} | Tickets: {partner['unresolved_ticket_count']}</div>
                     <div style="margin-top:5px; padding:5px; background:#333; border-radius:3px; font-size:0.8rem;">

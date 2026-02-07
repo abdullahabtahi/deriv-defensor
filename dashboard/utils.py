@@ -111,6 +111,7 @@ def estimate_churn_urgency(partner: dict) -> dict:
     - Steep login decline + payment delays = 🔴 ~7 days
     - Moderate decline + unresolved tickets = 🟡 ~30 days  
     - Slow drift = 🟢 ~90 days
+    - NEW: Competitor mentions accelerate urgency
     
     Returns:
         dict with 'label', 'color', 'days' keys
@@ -133,6 +134,13 @@ def estimate_churn_urgency(partner: dict) -> dict:
     
     # Days since interaction
     urgency_score += partner.get('days_since_last_interaction', 0) * 0.3
+    
+    # NEW: Competitive signals accelerate urgency
+    competitor_mentions = partner.get('competitor_mention_count', 0)
+    urgency_score += competitor_mentions * 5  # Each competitor mention = -5 days urgency
+    
+    if partner.get('pricing_complaint_flag', False):
+        urgency_score += 4  # Pricing complaints = shopping around
     
     # Map score to buckets
     if urgency_score > 14:
@@ -172,3 +180,110 @@ def log_intervention(partner_id: str, action: str, status: str = "pending", assi
     log.to_csv(log_path, index=False)
     return True
 
+
+# ============================================================================
+# ALERTING SYSTEM (Gap 4: Intelligent Alerting)
+# ============================================================================
+
+def should_alert(partner: dict, threshold: float = 0.85) -> bool:
+    """
+    Determine if partner crosses alert threshold.
+    
+    Alerts trigger for:
+    - Risk score > threshold
+    - AND urgency is 🔴 (7 days)
+    """
+    churn_prob = partner.get('churn_prob', 0)
+    urgency = estimate_churn_urgency(partner)
+    
+    return churn_prob > threshold and urgency['days'] <= 7
+
+
+def log_alert(partner_id: str, alert_type: str, severity: str, sent_to: str = 'dashboard'):
+    """
+    Append alert to alerts_history.csv.
+    
+    P4: Alert history log for monitoring and analytics.
+    """
+    from datetime import datetime
+    import uuid
+    
+    new_alert = {
+        'alert_id': str(uuid.uuid4())[:8],
+        'partner_id': partner_id,
+        'alert_type': alert_type,
+        'severity': severity,
+        'sent_to': sent_to,
+        'timestamp': datetime.now().isoformat(),
+        'acknowledged': False
+    }
+    
+    log_path = 'data/alerts_history.csv'
+    
+    try:
+        log = pd.read_csv(log_path)
+        log = pd.concat([log, pd.DataFrame([new_alert])], ignore_index=True)
+    except FileNotFoundError:
+        log = pd.DataFrame([new_alert])
+    
+    log.to_csv(log_path, index=False)
+    return new_alert['alert_id']
+
+
+def send_alert_email(partner: dict, explanation: str, recipient: str = 'demo@example.com') -> dict:
+    """
+    Send email alert via SMTP (or mock in demo mode).
+    
+    Demo mode: Returns mock success and logs alert
+    Production: Would use SMTP with credentials from environment
+    """
+    from datetime import datetime
+    
+    # Demo mode - mock the email send
+    mock_result = {
+        'success': True,
+        'message_id': f"MSG-{datetime.now().strftime('%Y%m%d%H%M%S')}",
+        'recipient': recipient,
+        'subject': f"⚠️ High-Risk Alert: Partner {partner.get('partner_id', 'Unknown')}",
+        'sent_at': datetime.now().isoformat(),
+        'mode': 'demo'  # In production, this would be 'production'
+    }
+    
+    # Log the alert
+    log_alert(
+        partner_id=partner.get('partner_id', 'Unknown'),
+        alert_type='email',
+        severity='high',
+        sent_to=recipient
+    )
+    
+    return mock_result
+
+
+def get_pending_alerts(limit: int = 20) -> pd.DataFrame:
+    """
+    Get unacknowledged alerts for alert monitor page.
+    """
+    log_path = 'data/alerts_history.csv'
+    
+    try:
+        log = pd.read_csv(log_path)
+        pending = log[log['acknowledged'] == False].sort_values('timestamp', ascending=False)
+        return pending.head(limit)
+    except FileNotFoundError:
+        return pd.DataFrame()
+
+
+def acknowledge_alert(alert_id: str) -> bool:
+    """
+    Mark alert as acknowledged.
+    """
+    log_path = 'data/alerts_history.csv'
+    
+    try:
+        log = pd.read_csv(log_path)
+        log.loc[log['alert_id'] == alert_id, 'acknowledged'] = True
+        log.to_csv(log_path, index=False)
+        return True
+    except (FileNotFoundError, KeyError):
+        return False

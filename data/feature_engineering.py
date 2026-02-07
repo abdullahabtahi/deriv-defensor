@@ -54,6 +54,15 @@ REQUIRED_FEATURES = [
     # Financial (2 features)
     'avg_commission_3m',            # Average commission last 3 months
     'commission_volatility',        # Standard deviation of monthly commissions
+    
+    # NEW: Competitive Signals (2 features)
+    'competitor_mention_count',     # Mentions of competitors in support/feedback
+    'pricing_complaint_flag',       # Has complained about pricing/commission rates
+    
+    # NEW: Relationship Signals (3 features)
+    'webinar_attendance_rate',      # % of available webinars attended (0-1)
+    'training_completion_count',    # Number of training modules completed (0-10)
+    'program_adoption_score',       # Overall engagement with partner programs (0-100)
 ]
 
 # ============================================================================
