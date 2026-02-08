@@ -2,6 +2,7 @@
 > **The Agentic Decisioning Platform for Partner Retention.**
 
 ![CRM & Intervention Dashboard](docs/images/Critical-Interventions-Detected.png)
+![AI-Risk-Analysis](docs/images/AI-Risk-Analysis.png)
 
 ## 🚨 The $10M Problem
 Affiliate partner churn is a silent revenue killer. By the time a high-value partner stops referring, it's too late. Traditional dashboards show you *what* happened. **Defensor shows you what *will* happen—and fixes it.**
