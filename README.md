@@ -1,7 +1,7 @@
 # Deriv Defensor
 > **The Agentic Decisioning Platform for Partner Retention.**
 
-![CRM & Intervention Dashboard](docs/images/dashboard-hero.png)
+![CRM & Intervention Dashboard](docs/images/Critical-Interventions-Detected.png)
 
 ## 🚨 The $10M Problem
 Affiliate partner churn is a silent revenue killer. By the time a high-value partner stops referring, it's too late. Traditional dashboards show you *what* happened. **Defensor shows you what *will* happen—and fixes it.**
@@ -19,7 +19,7 @@ Based on our validation with generated transactional data:
 ### Model Performance Dashboard
 ![ML Performance Dashboard](models/visualizations/5_ml_metrics_dashboard.png)
 
-Our LightGBM churn prediction model achieves **99.4% AUC** on synthetic validation data with remarkable stability:
+Our LightGBM churn prediction model achieves **0.994 AUC** on synthetic validation data with remarkable stability:
 - **Precision:** 97.2% (High confidence in predictions)
 - **Recall:** 94.4% (Catches 94% of at-risk partners)
 - **Cross-Validation Stability:** ±0.0015 std (Extremely consistent)
@@ -65,12 +65,12 @@ Real-time ingestion of partner behavior signals (commission drops, login gaps, s
 ### 2. **GenAI Intelligence (The "Brain")**
 It doesn't just flag risk; it explains *why*. The system automatically drafts personalized retention strategies.
 - **Tech:** LLM Integration
-- **Output:** Natural Language Briefings & Email Drafts
+- **Output:** Executive‑ready briefs & personalized outreach drafts
 
 ### 3. **Autonomous Intervention (The "Hands")**
 One-click or fully automated outreach execution.
 - **Tech:** Agentic Workflow
-- **Output:** Instant Email Execution & CRM Logging
+- **Output:** Triggered outreach sequence & Feedback signals for continuous learning
 
 ---
 
@@ -110,7 +110,7 @@ graph TD
 
 1. **Clone & Install**
    ```bash
-   git clone https://github.com/yourusername/deriv-defensor.git
+   git clone https://github.com/abdullahabtahi/deriv-defensor.git
    cd deriv-defensor
    
    # Backend
