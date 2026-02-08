@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { TrendingUp, TrendingDown, DollarSign, CheckCircle, XCircle, Clock } from "lucide-react"
 
+import { api } from "@/services/api"
+
 interface InterventionStats {
     total: number
     saved: number
@@ -21,16 +23,13 @@ export default function ROIPage() {
     useEffect(() => {
         async function fetchStats() {
             try {
-                const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001"
-                const response = await fetch(`${baseUrl}/interventions`)
-                if (!response.ok) throw new Error("Failed to fetch interventions")
-                const interventions = await response.json()
+                const interventions = await api.getInterventions()
 
                 // Calculate stats from interventions
                 const total = interventions.length
                 const saved = interventions.filter((i: any) => i.outcome_label === 'Saved').length
                 const failed = interventions.filter((i: any) => i.outcome_label === 'Failed').length
-                const pending = interventions.filter((i: any) => i.status === 'Pending').length
+                const pending = interventions.filter((i: any) => i.status === 'Pending' || i.outcome_label === 'Pending').length
 
                 // Calculate total LTV protected (mock calculation based on saved partners)
                 const totalLtvProtected = saved * 185000 // Average LTV
@@ -47,6 +46,15 @@ export default function ROIPage() {
                 })
             } catch (error) {
                 console.error('Error fetching ROI stats:', error)
+                // Fallback to minimal stats prevents crash if api completely fails
+                setStats({
+                    total: 0,
+                    saved: 0,
+                    failed: 0,
+                    pending: 0,
+                    totalLtvProtected: 0,
+                    successRate: 0
+                })
             } finally {
                 setLoading(false)
             }

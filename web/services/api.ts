@@ -118,6 +118,54 @@ export const MOCK_PARTNERS = [
     }
 ]
 
+export const MOCK_INTERVENTIONS = [
+    {
+        id: "INT-001",
+        timestamp: "2024-02-08T09:30:00Z",
+        partner_id: "P11972",
+        action_type: "Email - Retention Offer",
+        status: "Completed",
+        performed_by: "AI Agent",
+        outcome_label: "Saved"
+    },
+    {
+        id: "INT-002",
+        timestamp: "2024-02-07T14:15:00Z",
+        partner_id: "P88231",
+        action_type: "Call - Executive Outreach",
+        status: "Completed",
+        performed_by: "John Doe",
+        outcome_label: "Pending"
+    },
+    {
+        id: "INT-003",
+        timestamp: "2024-02-06T11:45:00Z",
+        partner_id: "P55102",
+        action_type: "Email - Product Update",
+        status: "Completed",
+        performed_by: "AI Agent",
+        outcome_label: "Failed"
+    },
+    {
+        id: "INT-004",
+        timestamp: "2024-02-05T16:20:00Z",
+        partner_id: "P33892",
+        action_type: "Meeting - Strategy Review",
+        status: "Pending",
+        performed_by: "Sarah Smith",
+        outcome_label: "Pending"
+    },
+    {
+        id: "INT-005",
+        timestamp: "2024-02-04T10:00:00Z",
+        partner_id: "P66201",
+        action_type: "Email - Performance Review",
+        status: "Completed",
+        performed_by: "AI Agent",
+        outcome_label: "Saved"
+    }
+]
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8001"
 
 export const api = {
@@ -181,12 +229,12 @@ export const api = {
 
     getInterventions: async () => {
         try {
-            const response = await fetch(`${API_BASE_URL}/interventions`)
+            const response = await fetch(`${API_BASE_URL}/interventions`, { cache: 'no-store' })
             if (!response.ok) throw new Error("Failed to fetch interventions")
             return await response.json()
         } catch (error) {
             console.error("Error fetching interventions:", error)
-            return []
+            return MOCK_INTERVENTIONS
         }
     },
 
